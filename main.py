@@ -75,7 +75,7 @@ class SpamFilter:
         try:
             return n/(n + p)
         except UnboundLocalError:
-            return 0.5
+            return self.prior_spam
         
     def ham(self, message):
         return (1 - self.spam(message))
