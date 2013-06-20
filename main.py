@@ -77,6 +77,18 @@ class SpamFilter:
         except UnboundLocalError:
             return self.prior_spam
         
+    def dump_to_file(self, filename):
+        with open(filename, 'w') as f:
+            import cPickle
+            data = self.prior_spam, self.conditionals
+            f.write(cPickle.dumps(data))
+
+    def load_from_file(self, filename):
+        with open(filename, 'r') as f:
+            import cPickle
+            data = cPickle.loads(f.read())
+        self.prior_spam, self.conditionals = data
+
     def ham(self, message):
         return (1 - self.spam(message))
 
